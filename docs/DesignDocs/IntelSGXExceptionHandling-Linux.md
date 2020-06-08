@@ -21,7 +21,7 @@ The goal of this document is to provide more extensive details into the function
 
 Figure "Linux Exception Handling Flow -1" provides a diagram of the flow for a call into an enclave, referred to as an ECall, when that ECall encounters a hardware exception within a user function.  
 
-![Linux Exception Handling ](images/ExceptionHandlingDiagram.png  )*Linux Exception Handling Flow - 1*
+![Linux Exception Handling ](images/ExceptionHandlingDiagram.PNG  )*Linux Exception Handling Flow - 1*
 
 Beginning in the application untrusted code, following the blue control flow line in the diagram, the application will call an Ecall Proxy Function, functions generated via the Edger8r tool, which makes a call to the Untrusted Run-time System (uRTS).  The uRTS has pre-configured a Linux Signal Handler function, uRTS::sig_handler to catch signals sent from the Linux OS as a result of an unhandled HW exception.  A function in the uRTS then issues the EENTER leaf of the ENCLU instruction to enter the enclave.
 
@@ -49,7 +49,7 @@ If there is a valid exception within the SSA's ExitInfo structure, then the Phas
 
 After the Phase 2 Handler is configured, the Phase 1 Handler then returns a successful status from the ECall via the EEXIT instruction.
 
-![Linux Exception Handling ](images/ExceptionHandlingDiagram-2.png  )*Linux Exception Handling Flow - 2*
+![Linux Exception Handling ](images/ExceptionHandlingDiagram-2.PNG  )*Linux Exception Handling Flow - 2*
 
 Linux Exception Handling Flow - 2 details the return from from the Phase 1 Handler back to the uRTS::sig_handler function.  If the Phase 1 Handler reports success, then the uRTS::sig_handler function returns and the original instruction, in this case the instruction at the AEP or the ENCLU::ERESUME, is reissued.  Because the SSA within the enclave has been modified, the ERESUME does not reissue the original enclave instruction which faulted, but instead enters the tRTS Phase 2 handler.
 
